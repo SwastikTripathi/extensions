@@ -132,8 +132,14 @@ export default function () {
 
                                             <List.Item.Detail.Metadata.Label title="Date" text={depDate} />
 
-                                            <List.Item.Detail.Metadata.Label title="From" text={`${flight.depCity} (${flight.depAirportIata})`} />
-                                            <List.Item.Detail.Metadata.Label title="To" text={`${flight.arrCity} (${flight.arrAirportIata})`} />
+                                            <List.Item.Detail.Metadata.Label
+                                                title="From"
+                                                text={flight.depAirportIata ? `${flight.depCity} (${flight.depAirportIata})` : flight.depCity}
+                                            />
+                                            <List.Item.Detail.Metadata.Label
+                                                title="To"
+                                                text={flight.arrAirportIata ? `${flight.arrCity} (${flight.arrAirportIata})` : flight.arrCity}
+                                            />
 
                                             <List.Item.Detail.Metadata.Separator />
 

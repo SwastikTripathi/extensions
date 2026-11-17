@@ -1,5 +1,9 @@
 # Flighty Changelog
 
+## [Load Flights With Unknown Codes] - {PR_MERGE_DATE}
+
+- Load flights whose airport has no IATA code, or whose aircraft code Flighty left empty, instead of skipping them as unreadable
+
 ## [Handle Unreadable Flights] - 2026-11-12
 
 - Keep readable flights available when another saved flight cannot be parsed

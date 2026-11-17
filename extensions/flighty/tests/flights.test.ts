@@ -56,3 +56,12 @@ test('limits field diagnostics for widespread format changes', () => {
     assert.equal(warning!.match(/\(invalid_type\)/g)?.length, 5)
     assert.match(warning!, /…/)
 })
+
+test('flights with unknown airport or aircraft codes still load', () => {
+    const unknown = {...flight, depAirportIata: null, arrAirportIata: '', aircraftIata: '', aircraftIcao: ' '}
+    const {flights, warning} = parseFlights([unknown])
+    assert.equal(warning, undefined)
+    assert.deepEqual(flights, [{...flight, depAirportIata: null, arrAirportIata: null, aircraftIata: null, aircraftIcao: null}])
+    assert.equal(searchFlights(flights, {departure: 'Stockholm', query: 'London'}).total, 1)
+    assert.equal(searchFlights(flights, {arrival: 'lhr'}).total, 0)
+})

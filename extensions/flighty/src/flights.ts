@@ -4,6 +4,10 @@ import {homedir} from 'os'
 // schema
 const TimestampSchema = z.int().positive()
 
+// Flighty leaves a code empty or unset when it doesn't know it, e.g. an airfield
+// without an IATA code or an aircraft type it couldn't identify
+const CodeSchema = (length: number) => z.preprocess((value) => (typeof value === 'string' && value.trim() === '' ? null : value), z.string().length(length).nullable())
+
 export const FlightSchema = z.object({
     id: z.uuid(),
     number: z.string(),
@@ -15,14 +19,14 @@ export const FlightSchema = z.object({
     airlineName: z.string(),
 
     // airports
-    depAirportIata: z.string().length(3),
+    depAirportIata: CodeSchema(3),
     depCity: z.string(),
-    arrAirportIata: z.string().length(3),
+    arrAirportIata: CodeSchema(3),
     arrCity: z.string(),
 
     // aircraft
-    aircraftIata: z.string().length(3).nullable(),
-    aircraftIcao: z.string().length(4).nullable(),
+    aircraftIata: CodeSchema(3),
+    aircraftIcao: CodeSchema(4),
     aircraftName: z.string().nullable(),
     aircraftTailNumber: z.string().nullable(),
 

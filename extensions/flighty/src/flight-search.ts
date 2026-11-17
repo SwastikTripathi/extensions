@@ -15,8 +15,8 @@ const searchSchema = z.object({
 
 export type FlightSearch = z.input<typeof searchSchema>
 
-function normalize(value: string) {
-    return value.toLowerCase().replace(/\s+/g, '')
+function normalize(value: string | null) {
+    return (value ?? '').toLowerCase().replace(/\s+/g, '')
 }
 
 function localDate(timestamp: number, timeZone: string) {
